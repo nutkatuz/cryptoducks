@@ -1,44 +1,92 @@
-import React, { useContext } from 'react';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+// Register.js
 
+import React, { Button } from "react";
+import { Link } from "react-router-dom";
+import Logo from "./Logo.js";
+import "./styles/Register.css";
+import * as duckAuth from "../duckAuth.jsx";
 
-function Card({ 
-  card, 
-  onCardClick, 
-  onCardDelete, 
-  onCardLike 
-}) { 
-  const currentUser = useContext(CurrentUserContext);
-  const isOwn = card.owner._id === currentUser._id;
-  const cardDeleteButtonClassName = (`card__recycle-bin hover-style ${isOwn ? '' : 'card__recycle-bin_hidden'}`);
-  const isLiked = card.likes.some(i => i._id === currentUser._id);
-  const cardLikeButtonClassName = `card__like hover-style ${isLiked && 'card__like_active'}`;
-
-  function handleClick() {
-    onCardClick(card);
+class Register extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  function handleDeleteClick () {
-    onCardDelete(card);
-  }
-  
-  function handleLikeClick() {
-    onCardLike(card);
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value,
+    });
   }
 
-  return (
-    <li className='card' >
-      <img className='card__image' alt={`${card.name}`} src={`${card.link}`} onMouseUp={handleClick}/>
-      <button className={cardDeleteButtonClassName} onMouseUp={handleDeleteClick}
-        type='button'
-        aria-label='Удалить' />
-      <h3 className='card__title'>{card.name}</h3>
-      <button className={cardLikeButtonClassName} onMouseUp={handleLikeClick}
-        type='button'
-        aria-label='Лайкнуть' />
-      <p className='card__like-count'>{card.likes.length}</p>
-    </li>
-  );
+  handleSubmit(e) { // логикa обработки формы регистрации
+    e.preventDefault();
+    if (this.state.password === this.state.confirmPassword) {
+      const { username, password, email } = this.state;
+      duckAuth.register(username, password, email);
+    }
+  }
+
+  render() {
+    return (
+      <div className="register">
+        <Logo title={"CryptoDucks"} />
+        <p className="register__welcome">Please register.</p>
+        <form onSubmit={this.handleSubmit} className="register__form">
+          <label for="username">Username:</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            value={this.state.username}
+            onChange={this.handleChange}
+          />
+          <label for="email">Email:</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            value={this.state.email}
+            onChange={this.handleChange}
+          />
+          <label for="password">Password:</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            value={this.state.password}
+            onChange={this.handleChange}
+          />
+          <label for="confirmPassword">Confirm password:</label>
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            value={this.state.confirmPassword}
+            onChange={this.handleChange}
+          />
+          <div className="register__button-container">
+            <button type="submit" className="register__link">
+              Sign up
+            </button>
+          </div>
+        </form>
+        <div className="register__signin">
+          <p>Already a member?</p>
+          <Link to="login" className="register__login-link">
+            Log in here
+          </Link>
+        </div>
+      </div>
+    );
+  }
 }
 
-export default Card;
+export default Register;

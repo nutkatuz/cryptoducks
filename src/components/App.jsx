@@ -7,7 +7,7 @@ import Login from './Login.js';
 import Register from './Register.js';
 import Ducks from './Ducks.js';
 import MyProfile from './MyProfile.js';
-// импортируем CSS
+import ProtectedRoute from './ProtectedRoute'; // импортируем HOC
 import './styles/App.css';
 
 class App extends React.Component {
@@ -21,15 +21,13 @@ class App extends React.Component {
   render(){
     return (
       <Switch>
-        <Route path="/ducks">
-          <Ducks />
-        </Route>
-        <Route path="/my-profile">
-          <MyProfile />
-        </Route>
+                {/* ниже разместим защищённые маршруты */}  
+                {/* и передадим несколько пропсов: loggedIn, path, component */}
+        <ProtectedRoute path="/ducks" loggedIn={this.state.loggedIn} component={Ducks} />
+        <ProtectedRoute path="/my-profile" loggedIn={this.state.loggedIn} component={MyProfile} />
         <Route path="/login">
           <div className="loginContainer">
-            <Login  />
+            <Login handleLogin={this.handleLogin} />
           </div>
         </Route>
         <Route path="/register">
