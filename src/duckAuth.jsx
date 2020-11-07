@@ -1,5 +1,3 @@
-// duckAuth.js
-
 export const BASE_URL = 'https://api.nomoreparties.co';
 
 export const register = (username, password, email) => {
@@ -54,3 +52,16 @@ export const authorize = (identifier, password) => {
 };
 
 // Проверяем, есть ли свойство jwt в объекте data, который вернул сервер. Если пользователь нашёлся и его учётные данные действительны, у нас есть доступ к токену. Токен сохраним в localStorage пользователя, чтобы он был там всякий раз, когда пользователь вернётся в приложение. Наконец, вернём объект с данными пользователя. В противном случае, если свойство user отсутствует, ничего не вернётся и токена не будет.
+
+export const getContent = (token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    }
+  })
+  .then(res => res.json())
+  .then(data => data)
+}//Функция getContent() принимает в качестве параметра один аргумент — JWT. Он будет отправлен на сервер (API) по маршруту /users/me, и, если токен действителен, вернёт ответ с информацией о пользователе.
