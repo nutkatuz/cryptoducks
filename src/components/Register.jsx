@@ -1,7 +1,5 @@
-// Register.js
-
-import React, { Button } from "react";
-import { Link } from "react-router-dom";
+import React from "react";// { Button } 
+import { Link, withRouter } from 'react-router-dom';
 import Logo from "./Logo.js";
 import "./styles/Register.css";
 import * as duckAuth from "../duckAuth.jsx";
@@ -26,11 +24,24 @@ class Register extends React.Component {
     });
   }
 
-  handleSubmit(e) { // логикa обработки формы регистрации
+  handleSubmit(e) { // логикa обработки формы регистрации, .then -- Пользователь должен быть переадресован, только если форма регистрации заполнена правильно и отправлена
     e.preventDefault();
     if (this.state.password === this.state.confirmPassword) {
-      const { username, password, email } = this.state;
-      duckAuth.register(username, password, email);
+      let { username, password, email } = this.state;
+      duckAuth.register(username, password, email)
+      .then((res) => {
+        if(res){
+          this.setState({
+            message: ''
+          }, () => {
+            this.props.history.push('/login');
+          })
+        } else {
+          this.setState({
+            message: 'Что-то пошло не так!'
+          })
+        }
+      });
     }
   }
 
@@ -89,4 +100,6 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+// изменим последнюю строку в файле Register.js
+export default withRouter(Register);
+//Теперь компонент Register обёрнут в HOC-компонент. Он сможет получить доступ к объекту history в props. Объект history позволяет использовать метод push. В качестве аргумента он принимает путь, на который мы перенаправляем пользователя. В нашем случае — '/login'.

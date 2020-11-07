@@ -25,3 +25,32 @@ export const register = (username, password, email) => {
   })
   .catch((err) => console.log(err));
 };
+
+export const authorize = (identifier, password) => {
+  return fetch(`${BASE_URL}/auth/local`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({identifier, password})
+  })
+  .then((response => response.json()))
+  // .then((data) => {
+  //   if (data.user){
+  //     localStorage.setItem('jwt', data.jwt);
+  //     return data;
+  //   }
+  // })
+  .then((data) => {
+    if (data.jwt){
+      localStorage.setItem('jwt', data.jwt);
+      return data;
+    } else {
+      return;
+    }
+  })
+  .catch(err => console.log(err))
+};
+
+// Проверяем, есть ли свойство jwt в объекте data, который вернул сервер. Если пользователь нашёлся и его учётные данные действительны, у нас есть доступ к токену. Токен сохраним в localStorage пользователя, чтобы он был там всякий раз, когда пользователь вернётся в приложение. Наконец, вернём объект с данными пользователя. В противном случае, если свойство user отсутствует, ничего не вернётся и токена не будет.

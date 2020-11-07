@@ -16,6 +16,17 @@ class App extends React.Component {
     this.state = {
       loggedIn: false
     }
+    this.handleLogin = this.handleLogin.bind(this);
+  }
+
+  componentDidMount() { // позже здесь тоже нужно будет проверить токен пользователя!
+  };
+
+  handleLogin(e){
+      e.preventDefault();
+    this.setState({
+      loggedIn: true
+    })
   }
 
   render(){
