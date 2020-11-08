@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from './NavBar.js';
+import NavBar from './NavBar.jsx';
 import './styles/MyProfile.css';
 
 function MyProfile ({ userData = {} }) {

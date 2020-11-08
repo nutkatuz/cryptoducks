@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Logo from './Logo.jsx';
-import * as duckAuth from '../duckAuth.js';
+import * as duckAuth from '../duckAuth.jsx';
 import './styles/Register.css';
 
 class ___Register extends React.Component {

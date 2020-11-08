@@ -1,6 +1,6 @@
 import React from 'react';
-import NavBar from './NavBar.js';
-import DuckList from './DuckList.js';
+import NavBar from './NavBar.jsx';
+import DuckList from './DuckList.jsx';
 
 function Ducks () {
   return (

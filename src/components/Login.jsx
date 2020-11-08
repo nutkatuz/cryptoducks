@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { setToken } from '../utils/token';
-import Logo from './Logo.js';
-import * as duckAuth from '../duckAuth.js';
+import Logo from './Logo.jsx';
+import * as duckAuth from '../duckAuth.jsx';
 import './styles/Login.css';
 
 class __Login extends React.Component {

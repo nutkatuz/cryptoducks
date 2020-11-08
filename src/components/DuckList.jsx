@@ -1,6 +1,6 @@
 import React from 'react';
-import DuckCard from './DuckCard.js';
-import data from '../data.js';
+import DuckCard from './DuckCard.jsx';
+import data from '../data.jsx';
 import './styles/DuckList.css';
 
 function DuckList () {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
-import * as duckAuth from '../duckAuth.js';
+import * as duckAuth from '../duckAuth.jsx';
 import { getToken } from '../utils/token';
 import Ducks from './Ducks.jsx';
 import Login from './Login.jsx';
